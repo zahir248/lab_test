@@ -122,68 +122,70 @@ class _BMICalculatorState extends State<BMICalculator> {
       appBar: AppBar(
         title: Text('BMI Calculator'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: fullNameController,
-              decoration: InputDecoration(labelText: 'Your Fullname'),
-            ),
-            SizedBox(height: 10),
-            TextField(
-              controller: heightController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Height in cm; 170'),
-            ),
-            SizedBox(height: 10),
-            TextField(
-              controller: weightController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'Weight in KG'),
-            ),
-            SizedBox(height: 10),
-            TextField(
-              decoration: InputDecoration(labelText: '$bmi'),
-              enabled: false,
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Radio(
-                  value: 'Male',
-                  groupValue: gender,
-                  onChanged: (value) {
-                    setState(() {
-                      gender = value.toString();
-                    });
-                  },
-                ),
-                Text('Male'),
-                Radio(
-                  value: 'Female',
-                  groupValue: gender,
-                  onChanged: (value) {
-                    setState(() {
-                      gender = value.toString();
-                    });
-                  },
-                ),
-                Text('Female'),
-              ],
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                calculateBMI();
-              },
-              child: Text('Calculate BMI and Save'),
-            ),
-            SizedBox(height: 20),
-            Expanded(
-              child: ListView.builder(
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                controller: fullNameController,
+                decoration: InputDecoration(labelText: 'Your Fullname'),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: heightController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(labelText: 'Height in cm; 170'),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: weightController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(labelText: 'Weight in KG'),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                decoration: InputDecoration(labelText: bmi != 0.0 ? '$bmi' : 'BMI Value'),
+                enabled: false,
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Radio(
+                    value: 'Male',
+                    groupValue: gender,
+                    onChanged: (value) {
+                      setState(() {
+                        gender = value.toString();
+                      });
+                    },
+                  ),
+                  Text('Male'),
+                  Radio(
+                    value: 'Female',
+                    groupValue: gender,
+                    onChanged: (value) {
+                      setState(() {
+                        gender = value.toString();
+                      });
+                    },
+                  ),
+                  Text('Female'),
+                ],
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  calculateBMI();
+                },
+                child: Text('Calculate BMI and Save'),
+              ),
+              SizedBox(height: 20),
+              ListView.builder(
+                shrinkWrap: true, // Ensure this property is set
                 itemCount: bmiRecords.length,
                 itemBuilder: (context, index) {
                   return ListTile(
@@ -195,10 +197,11 @@ class _BMICalculatorState extends State<BMICalculator> {
                   );
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
+
 }
